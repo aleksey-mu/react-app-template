@@ -49,6 +49,35 @@ const config = {
 				],
 			},
 			{
+				test: /\.(gif|png|jpe?g|svg)$/i,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {
+							outputPath: './img',
+							name: '[name].[ext]',
+						},
+					},
+					{
+						loader: 'image-webpack-loader',
+						options: {
+							disable: isDev,
+							mozjpeg: {
+								progressive: true,
+								quality: 75,
+							},
+							pngquant: {
+								quality: [0.75, 0.9],
+								speed: 4,
+							},
+							webp: {
+								quality: 75,
+							},
+						},
+					},
+				],
+			},
+			{
 				test: /\.(ts|js)x?$/,
 				exclude: /node_modules/,
 				use: {
@@ -56,8 +85,12 @@ const config = {
 				},
 			},
 			{
-				test: /\.(scss|css)$/,
+				test: /\.css$/,
 				use: ['style-loader', 'css-loader'],
+			},
+			{
+				test: /\.s[ac]ss$/i,
+				use: ['style-loader', 'css-loader', 'sass-loader'],
 			},
 		],
 	},
@@ -68,11 +101,6 @@ const config = {
 		new CleanWebpackPlugin(),
 		new CopyWebpackPlugin({
 			patterns: [
-				{
-					from: './src/assets/img',
-					to: './img/',
-					noErrorOnMissing: true,
-				},
 				{
 					from: './src/assets/audio',
 					to: './audio',

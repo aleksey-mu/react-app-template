@@ -4,7 +4,9 @@ class App extends React.PureComponent {
 	render() {
 		return (
 			<div>
-				<h1>Hello Alex!</h1>
+				<h1>
+					Hello Alex! <div>another color</div>
+				</h1>
 			</div>
 		);
 	}
